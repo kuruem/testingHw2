@@ -62,4 +62,46 @@ public class AccountTest {
 		Assert.assertEquals(expected, actual);
 	}
 	
+	@Test
+	public void TestDepositPositive() throws Exception{
+		final Account account = new Account();
+		account.setBalance(1000);
+		account.deposit(2500);
+		final double actual = account.getBalance();
+		final double expected = 3500;
+		Assert.assertEquals(expected, actual, 0);
+	}
+	
+	@Test
+	public void TestDepositNegative() throws Exception{
+		final Account account = new Account();
+		account.setBalance(1000);
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Amount should be a positive value");
+		account.deposit(-1000);
+		
+		
+	}
+
+	@Test
+	public void TestWithdrawGreaterBalance() throws Exception{
+		final Account account = new Account();
+		account.setBalance(1000);
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("Amount cannot be greater than balance");
+		account.withdraw(1500);
+	
+	}
+	
+	
+	@Test
+	public void TestWithdrawBalance() throws Exception{
+		final Account account = new Account();
+		account.setBalance(1000);
+		account.withdraw(500);
+		final double actual = account.getBalance();
+		final double expected = 500;
+		Assert.assertEquals(expected, actual, 0);
+	}
+	
 }
