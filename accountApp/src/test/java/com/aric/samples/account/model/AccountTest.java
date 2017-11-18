@@ -18,12 +18,22 @@ public class AccountTest {
     public ExpectedException exception = ExpectedException.none();
 	
 	@Test
-	public void getIdTest() throws Exception{
+	public void TestGetId() throws Exception{
 		final Account account = new Account();
 		account.setId(14);
 		final long actual = account.getId();
 		final long expected = 14;
 		Assert.assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void TestGetBalance() throws Exception{
+		final Account account = new Account();
+		account.setBalance(1000);
+		final double actual = account.getBalance();
+		final double expected = 1000;
+		Assert.assertEquals(expected, actual, 1000);
+		
 	}
 	
 }
