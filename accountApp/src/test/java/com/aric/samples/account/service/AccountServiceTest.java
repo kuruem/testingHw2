@@ -32,12 +32,17 @@ public class AccountServiceTest {
 	private static final String LAST_NAME1= "yasar";
 	private static final String FIRST_NAME2= "emre";
 	private static final String LAST_NAME2= "kuru";
+	private static final String FIRST_NAME3= "burak";
+	private static final String LAST_NAME3= "yılmaz";
 	private static final long tckn1=161;
 	private static final long tckn2=292;
+	private static final long tckn3=500;
 	private static final long id1=1;
 	private static final long id2=2;
+	private static final long id3=3;
 	private static final double balance1=1500;
 	private static final double balance2=2500;
+	private static final double balance3=5000;
 	private static final double money=500;
 	private AccountRepository mockAccountRepository;
 	
@@ -50,16 +55,22 @@ public class AccountServiceTest {
 		account3=new Account();
 		account1.setId(id1);
 		account2.setId(id2);
+		account3.setId(id3);
 		account1.setOwnerFirstName(FIRST_NAME1);
 		account2.setOwnerFirstName(FIRST_NAME2);
+		account3.setOwnerFirstName(FIRST_NAME3);
 		account1.setOwnerLastName(LAST_NAME1);
 		account2.setOwnerLastName(LAST_NAME2);
+		account3.setOwnerLastName(LAST_NAME3);
 		account1.setOwnerTckn(tckn1);
 		account2.setOwnerTckn(tckn2);
+		account3.setOwnerTckn(tckn3);
 		account1.setBalance(balance1);
 		account2.setBalance(balance2);
+		account3.setBalance(balance3);
 		account.add(account1);
 		account.add(account2);
+		account.add(account3);
 	}
 	
 	@Autowired
@@ -72,16 +83,19 @@ public class AccountServiceTest {
 		ReflectionTestUtils.setField(accountingService,"accountRepository",mockAccountRepository);
 		Mockito.when(mockAccountRepository.findByOwnerTckn(161)).thenReturn(Arrays.asList(account1));
 		Mockito.when(mockAccountRepository.findByOwnerTckn(292)).thenReturn(Arrays.asList(account2));
+		Mockito.when(mockAccountRepository.findByOwnerTckn(500)).thenReturn(Arrays.asList(account3));
 		Mockito.when(mockAccountRepository.findOne((long) 1)).thenReturn(account1);
 		Mockito.when(mockAccountRepository.findOne((long) 2)).thenReturn(account2);
+		Mockito.when(mockAccountRepository.findOne((long) 3)).thenReturn(account3);
 		Mockito.when(mockAccountRepository.save(account1)).thenReturn(account1);
 		Mockito.when(mockAccountRepository.save(account2)).thenReturn(account2);
+		Mockito.when(mockAccountRepository.save(account3)).thenReturn(account3);
+		
 	}
 	
 	@Test
 	public void findPersonsByTcknTest() throws Exception{
 		accountson = accountingService.findPersonsByTckn(161);
-		Mockito.verify(mockAccountRepository);
 		Assert.assertEquals("yanlis ismi buldu","kursat", accountson.get(0).getOwnerFirstName());
 		Assert.assertEquals("yasar", accountson.get(0).getOwnerLastName());
 		//Assert.assertEquals("balance dogru degil",balance1, accountson.get(0).getBalance(),0);
@@ -101,11 +115,11 @@ public class AccountServiceTest {
 			
 	}
 	@Test
-	public void testdeposit() throws Exception {
+	public void depositTest() throws Exception{
 		Account acc = new Account();
-		acc = accountingService.deposit(id1,money);
-		Mockito.verify(mockAccountRepository);
-		Assert.assertEquals(2000, acc.getBalance(),0);
+		acc = accountingService.deposit(id3,money);
+		Assert.assertEquals(5500, acc.getBalance(),0);
+		
 		
 	}
 
