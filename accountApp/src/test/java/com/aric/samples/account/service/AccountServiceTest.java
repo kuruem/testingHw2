@@ -89,21 +89,23 @@ public class AccountServiceTest {
 		
 	}
 	
-	@Test
-	public void depositTest() throws Exception {
-		
-		account3 = accountingService.deposit(id1,money);
-		Assert.assertEquals(account1.getBalance()+ money, account3.getBalance(),0);
-		
-	}
+
+	
+	
 	@Test
 	public void eftTest() throws Exception{
 		Account temp1= new Account();
 		temp1=accountingService.eft(id2, id1, money);
-		System.out.println(temp1.getId()+" -- "+temp1.getBalance());
-		
-		
-		
+		//System.out.println(temp1.getId()+" -- "+temp1.getBalance());
+		Assert.assertEquals(2000, temp1.getBalance(),0);
+			
+	}
+	@Test
+	public void testdeposit() throws Exception {
+		Account acc = new Account();
+		acc = accountingService.deposit(id1,money);
+		Mockito.verify(mockAccountRepository);
+		Assert.assertEquals(2000, acc.getBalance(),0);
 		
 	}
 
